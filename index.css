@@ -38,7 +38,7 @@ body {
     background: rgba(0, 18, 26, 0.85) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 2px solid #8DC63F !important;
+    border-bottom: 2px solid #00D2FF !important;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
 }
 
@@ -69,7 +69,7 @@ body {
 }
 
 .hamburger-btn:hover {
-    color: #8DC63F;
+    color: #00D2FF;
 }
 
 .mobile-header-avatar {
@@ -83,7 +83,7 @@ body {
     font-family: 'Inter', sans-serif;
     font-size: 1.35rem;
     font-weight: 900;
-    background: linear-gradient(135deg, #ffffff, #8DC63F);
+    background: linear-gradient(135deg, #ffffff, #00D2FF);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
@@ -116,14 +116,14 @@ body {
 .mobile-header-nav a i { font-size: 1rem; }
 
 .mobile-header-nav a.active {
-    background: rgba(141, 198, 63, 0.15) !important;
-    color: #8DC63F !important;
+    background: rgba(0, 210, 255, 0.15) !important;
+    color: #00D2FF !important;
     font-weight: 700;
 }
 
 .mobile-header-nav a:not(.active):hover {
     background: rgba(255, 255, 255, 0.08) !important;
-    color: #8DC63F !important;
+    color: #00D2FF !important;
 }
 
 @media (min-width: 1024px) {
@@ -2301,8 +2301,8 @@ body {
     background: rgba(0, 18, 26, 0.85) !important;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border-top: 2px solid #8DC63F !important;
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.3);
+    border-top: 2px solid #00D2FF !important;
+    box-shadow: 0 -8px 30px rgba(0, 210, 255, 0.15), 0 -8px 30px rgba(0, 0, 0, 0.3) !important;
     transition: transform 0.3s, opacity 0.3s;
     flex-shrink: 0;
     z-index: 10;
@@ -2336,11 +2336,11 @@ body {
 
 .nav-item i { font-size: 1.4rem; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
 .nav-item span { line-height: 1; }
-.nav-item.active { color: #8DC63F !important; background: rgba(141, 198, 63, 0.15) !important; font-weight: 700; }
+.nav-item.active { color: #00D2FF !important; background: rgba(0, 210, 255, 0.15) !important; font-weight: 700; }
 .nav-item.active i { transform: translateY(-3px); }
-.nav-item:not(.active):hover { color: #8DC63F !important; background: rgba(141, 198, 63, 0.08) !important; }
-.nav-item.nav-profile { color: #8DC63F !important; }
-.nav-item.nav-profile.active { color: #8DC63F !important; background: rgba(141, 198, 63, 0.15) !important; }
+.nav-item:not(.active):hover { color: #00D2FF !important; background: rgba(0, 210, 255, 0.08) !important; }
+.nav-item.nav-profile { color: #00D2FF !important; }
+.nav-item.nav-profile.active { color: #00D2FF !important; background: rgba(0, 210, 255, 0.15) !important; }
 
 /* Nav item needs relative for badge positioning */
 .nav-item, .nav-chat-link { position: relative; }
@@ -3122,21 +3122,21 @@ body {
         background: rgba(0, 18, 26, 0.85) !important;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border-bottom: 2px solid #8DC63F !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        border-bottom: 2px solid #00D2FF !important;
+        box-shadow: 0 4px 20px rgba(0, 210, 255, 0.1), 0 4px 20px rgba(0, 0, 0, 0.25) !important;
     }
     .header-logo { display:flex; align-items:center; gap:12px; font-family:'Playfair Display',serif; font-size:1.8rem; color:#ffffff !important; font-weight:600; }
-    .header-avatar { width:40px; height:40px; border-radius:50%; border:2px solid white; display: flex; justify-content: center; align-items: center; background: rgba(141, 198, 63, 0.15); color: #8DC63F; font-size: 1.2rem; }
+    .header-avatar { width:40px; height:40px; border-radius:50%; border:2px solid white; display: flex; justify-content: center; align-items: center; background: rgba(0, 210, 255, 0.15); color: #00D2FF; font-size: 1.2rem; }
     .header-nav { display:flex; gap:32px; }
     .header-nav a { text-decoration:none; color:rgba(255, 255, 255, 0.7) !important; font-weight:600; font-size:1.05rem; padding-bottom:4px; position: relative; transition: color 0.3s; }
-    .header-nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #8DC63F !important; transition: width 0.3s ease; }
-    .header-nav a:hover { color: #8DC63F !important; }
+    .header-nav a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0; background-color: #00D2FF !important; transition: width 0.3s ease; }
+    .header-nav a:hover { color: #00D2FF !important; }
     .header-nav a:hover::after { width: 100%; }
-    .header-nav a.active { color:#8DC63F !important; }
+    .header-nav a.active { color:#00D2FF !important; }
     .header-nav a.active::after { width: 100%; }
     .header-user { display:flex; align-items:center; gap:16px; }
     .desktop-header .icon-btn { color: rgba(255, 255, 255, 0.8) !important; transition: color 0.2s; }
-    .desktop-header .icon-btn:hover { color: #8DC63F !important; }
+    .desktop-header .icon-btn:hover { color: #00D2FF !important; }
     .desktop-header .header-logout-link { color: rgba(255, 255, 255, 0.8) !important; font-size: 1.2rem; transition: color 0.2s; }
     .desktop-header .header-logout-link:hover { color: #e74c3c !important; }
     .user-dropdown {
@@ -3155,10 +3155,10 @@ body {
     }
     .user-dropdown:hover {
         background: rgba(255, 255, 255, 0.15) !important;
-        border-color: #8DC63F !important;
-        color: #8DC63F !important;
+        border-color: #00D2FF !important;
+        color: #00D2FF !important;
     }
-    .header-avatar-mini { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg, #8DC63F, #569e25) !important; color:white; font-size:0.75rem; font-weight:700; display:flex; justify-content:center; align-items:center; flex-shrink:0; }
+    .header-avatar-mini { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg, #00D2FF, #0077ff) !important; color:white; font-size:0.75rem; font-weight:700; display:flex; justify-content:center; align-items:center; flex-shrink:0; }
     .header-avatar-mini-img { width:28px; height:28px; border-radius:50%; object-fit:cover; flex-shrink:0; border:1px solid rgba(255,255,255,0.5); }
 
     /* Header Dropdown */
