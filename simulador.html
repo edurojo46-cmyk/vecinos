@@ -1870,10 +1870,10 @@
         #mobile-nav-bar {
             display: none;
             height: 60px;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(0, 18, 26, 0.85) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 2px solid #8DC63F !important;
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
@@ -1882,11 +1882,12 @@
             left: 0;
             width: 100%;
             z-index: 199;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
         }
 
         #mobile-menu-btn {
             font-size: 24px;
-            color: #0284C7;
+            color: #ffffff !important;
             background: none;
             border: none;
             cursor: pointer;
@@ -1896,11 +1897,12 @@
             align-items: center;
             justify-content: center;
             border-radius: 8px;
-            transition: background 0.2s;
+            transition: background 0.2s, color 0.2s;
         }
 
         #mobile-menu-btn:hover {
-            background: rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: #8DC63F !important;
         }
 
         /* Sidebar overlay for clicking away on mobile */
@@ -1942,8 +1944,55 @@
                 height: 100vh;
                 z-index: 200;
                 transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
-                background-color: rgba(255, 255, 255, 0.95);
+                box-shadow: 10px 0 35px rgba(0, 0, 0, 0.4);
+                background-color: #0b141d !important;
+                border-right: 1px solid rgba(0, 229, 255, 0.15) !important;
+            }
+
+            /* Gray out the sidebar links on mobile for high contrast */
+            #sidebar .brand-text h1 {
+                background: none !important;
+                -webkit-text-fill-color: #ffffff !important;
+                color: #ffffff !important;
+            }
+            #sidebar .brand-text p {
+                color: rgba(255, 255, 255, 0.45) !important;
+            }
+            #sidebar .nav-item {
+                color: rgba(255, 255, 255, 0.6) !important;
+                background: transparent !important;
+                border-color: transparent !important;
+            }
+            #sidebar .nav-item i {
+                color: rgba(255, 255, 255, 0.45) !important;
+            }
+            #sidebar .nav-item:hover {
+                color: #ffffff !important;
+                background-color: rgba(255, 255, 255, 0.05) !important;
+            }
+            #sidebar .nav-item.active {
+                color: #ffffff !important;
+                background: rgba(255, 255, 255, 0.1) !important;
+                border-color: rgba(255, 255, 255, 0.15) !important;
+                box-shadow: none !important;
+            }
+            #sidebar .nav-item.active i {
+                color: #ffffff !important;
+            }
+            #sidebar .civic-wallet {
+                background: rgba(255, 255, 255, 0.02) !important;
+                border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            }
+            #sidebar .wallet-label {
+                color: rgba(255, 255, 255, 0.45) !important;
+            }
+            #sidebar .wallet-val {
+                color: #ffffff !important;
+            }
+            #sidebar .sidebar-footer a {
+                color: rgba(255, 255, 255, 0.7) !important;
+                border-color: rgba(255, 255, 255, 0.1) !important;
+                background: rgba(255, 255, 255, 0.05) !important;
             }
 
             #sidebar.open {
@@ -2090,7 +2139,7 @@
         <button id="mobile-menu-btn" onclick="toggleMobileSidebar()"><i class="ri-menu-line"></i></button>
         <div style="display:flex; align-items:center; gap:8px;">
             <img src="assets/logo.png" alt="Logo" style="width:32px; height:32px; border-radius:8px; border:1px solid #8DC63F; object-fit: contain; background: transparent;">
-            <span style="font-family:var(--font-title); font-weight:800; font-size:15px; color:#0F172A;">Vecinos</span>
+            <span style="font-family:var(--font-title); font-weight:800; font-size:15px; color:#ffffff;">Vecinos</span>
         </div>
         <div style="width: 32px;"></div> <!-- visual spacer -->
     </header>
