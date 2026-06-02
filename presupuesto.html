@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vecinos - Descodificador del Presupuesto de Buenos Aires</title>
+    <!-- Outfit & Plus Jakarta Sans Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Remixicons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           DESIGN SYSTEM (Sleek Dark Mode Glassmorphism)
+           ========================================================================== */
+         :root {
+            --color-bg: #00121a;
+            --color-sidebar: rgba(0, 30, 41, 0.7);
+            --color-card: rgba(0, 42, 58, 0.55);
+            --color-card-border: rgba(0, 229, 255, 0.2);
+            
+            --color-primary: #00E5FF;       /* Cyber Cyan Electric Accent */
+            --color-blue: #00B0FF;          /* Civic Blue */
+            --color-success: #00E676;       /* Neon Cyber Green */
+            --color-warning: #FFD700;
+            --color-danger: #FF1744;
+            --color-purple: #D500F9;
+            --color-text-main: #E0F7FA;     /* Crisp Sky Light Text */
+            --color-text-muted: #80DEEA;    /* Luminous Teal/Cyan Muted Text */
+            
+            --font-title: 'Outfit', sans-serif;
+            --font-ui: 'Plus Jakarta Sans', sans-serif;
+            
+            --glass-blur: 16px;
+            --border-radius-sm: 8px;
+            --border-radius-md: 16px;
+            --border-radius-lg: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            font-family: var(--font-ui);
+            min-height: 100vh;
+            display: flex;
+            background-image: 
+                radial-gradient(circle at 50% -20%, #00e5ff 0%, #005f73 50%, #00121a 100%) !important;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* High-Tech HUD & Circuits Background Overlay */
+        .cyber-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+        }
+        .cyber-ring-rotate {
+            transform-origin: center;
+            animation: cyber-spin 80s linear infinite;
+        }
+        .cyber-ring-rotate-reverse {
+            transform-origin: center;
+            animation: cyber-spin-reverse 60s linear infinite;
+        }
+        .cyber-pulse {
+            animation: cyber-flash 4s ease-in-out infinite;
+        }
+        @keyframes cyber-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes cyber-spin-reverse {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+        @keyframes cyber-flash {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.85; }
+        }
+
+        /* ==========================================================================
+           CYBER GLASSMORPHISM HIGH-CONTRAST CONTRAST & LEGIBILITY OVERWRITES
+           ========================================================================== */
+        h1, h2, h3, h4, h5, h6, strong, b {
+            color: #FFFFFF !important;
+        }
+        .brand-text h1 {
+            background: linear-gradient(135deg, #FFFFFF 30%, #00e5ff 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+        }
+        .brand-text p {
+            color: #00E5FF !important;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.35) !important;
+        }
+        .nav-item.active {
+            color: #00E5FF !important;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(0, 77, 97, 0.08)) !important;
+            border-color: rgba(0, 229, 255, 0.35) !important;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.15) !important;
+        }
+        .nav-item.active i {
+            color: #00E5FF !important;
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
+        }
+        .sidebar-footer {
+            border-top: 1px solid rgba(0, 229, 255, 0.15) !important;
+        }
+        .civic-wallet {
+            background: rgba(1, 20, 34, 0.7) !important;
+            border: 1px solid rgba(0, 229, 255, 0.15) !important;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.05) !important;
+        }
+        .wallet-val {
+            color: #FFFFFF !important;
+        }
+        .wallet-val.pulse {
+            color: var(--color-success) !important;
+            text-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
+        }
+        #workspace-header {
+            background-color: rgba(2, 14, 24, 0.7) !important;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+        }
+        .header-badge {
+            background-color: rgba(0, 229, 255, 0.1) !important;
+            border: 1px solid rgba(0, 229, 255, 0.25) !important;
+            color: #00E5FF !important;
+            text-shadow: 0 0 5px rgba(0, 229, 255, 0.3) !important;
+        }
+        .user-name {
+            color: #FFFFFF !important;
+        }
+        .user-avatar {
+            color: #FFFFFF !important;
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.3) !important;
+            border: 1px solid rgba(0, 229, 255, 0.4) !important;
+        }
+        .sim-btn {
+            color: #000000 !important;
+            background: linear-gradient(135deg, #00E5FF, #00B0FF) !important;
+            font-weight: 700 !important;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.3) !important;
+        }
+        .sim-btn:hover {
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.5) !important;
+        }
+        .sim-btn-secondary {
+            color: #00E5FF !important;
+            background: rgba(0, 229, 255, 0.05) !important;
+            border-color: rgba(0, 229, 255, 0.2) !important;
+        }
+        .sim-btn-secondary:hover {
+            background: rgba(0, 229, 255, 0.12) !important;
+            color: #FFFFFF !important;
+            border-color: rgba(0, 229, 255, 0.3) !important;
+        }
+        .calc-input {
+            background-color: rgba(1, 16, 28, 0.75) !important;
+            border: 1px solid rgba(0, 229, 255, 0.2) !important;
+            color: #FFFFFF !important;
+        }
+        .calc-input:focus {
+            border-color: #00E5FF !important;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.25) !important;
+        }
+        .calc-chip {
+            background: rgba(0, 229, 255, 0.05) !important;
+            border: 1px solid rgba(0, 229, 255, 0.15) !important;
+            color: #00E5FF !important;
+        }
+        .calc-chip:hover {
+            background: rgba(0, 229, 255, 0.15) !important;
+            border-color: rgba(0, 229, 255, 0.3) !important;
+            color: #FFFFFF !important;
+        }
+        .legend-card {
+            background: rgba(3, 24, 40, 0.55) !important;
+            border: 1px solid rgba(0, 229, 255, 0.1) !important;
+        }
+        .legend-card:hover, .legend-card.selected {
+            background: rgba(0, 229, 255, 0.12) !important;
+            border-color: rgba(0, 229, 255, 0.35) !important;
+        }
+        .calc-output-card {
+            background: rgba(1, 20, 34, 0.5) !important;
+            border: 1px solid rgba(0, 229, 255, 0.08) !important;
+        }
+        .calc-output-card:hover {
+            background: rgba(0, 229, 255, 0.08) !important;
+            border-color: rgba(0, 229, 255, 0.15) !important;
+        }
+        .chart-container {
+            background: rgba(3, 24, 40, 0.5) !important;
+            border: 1px solid rgba(0, 229, 255, 0.1) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        }
+        .donut-hole {
+            background-color: #030e17 !important;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.3) !important;
+        }
+        .details-viewer-box {
+            background: rgba(1, 16, 28, 0.7) !important;
+            border: 1px solid rgba(0, 229, 255, 0.12) !important;
+        }
+        .details-header {
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15) !important;
+        }
+        .details-desc-p strong {
+            color: #00E5FF !important;
+        }
+        .funded-checklist {
+            background: rgba(1, 20, 34, 0.7) !important;
+            border: 1px solid rgba(0, 229, 255, 0.15) !important;
+        }
+        .budget-global-stat {
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.05), rgba(0, 229, 255, 0.03)) !important;
+            border: 1.5px dashed rgba(0, 229, 255, 0.25) !important;
+        }
+        .stat-details h4 {
+            background: linear-gradient(135deg, #FFFFFF, #00E5FF) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+        .stat-badge-large {
+            background: rgba(0, 230, 118, 0.1) !important;
+            border: 1px solid rgba(0, 230, 118, 0.25) !important;
+            color: #00E676 !important;
+        }
+        .dictionary-card {
+            background: rgba(3, 24, 40, 0.55) !important;
+            border: 1px solid rgba(0, 229, 255, 0.1) !important;
+        }
+        .dictionary-card:hover {
+            background: rgba(0, 229, 255, 0.08) !important;
+            border-color: rgba(0, 229, 255, 0.2) !important;
+        }
+        .term-desc p strong {
+            color: #00E5FF !important;
+        }
+        .term-header {
+            border-bottom: 1px solid rgba(0, 229, 255, 0.15) !important;
+        }
+        .planner-slider-row {
+            background: rgba(3, 24, 40, 0.55) !important;
+            border: 1px solid rgba(0, 229, 255, 0.1) !important;
+        }
+        .planner-slider-row:hover {
+            background: rgba(0, 229, 255, 0.08) !important;
+            border-color: rgba(0, 229, 255, 0.2) !important;
+        }
+        .kpi-card {
+            background: rgba(1, 20, 34, 0.5) !important;
+            border: 1px solid rgba(0, 229, 255, 0.08) !important;
+        }
+        .planner-progress-track {
+            background: rgba(0, 229, 255, 0.08) !important;
+        }
+        input[type="range"] {
+            accent-color: #00E5FF !important;
+        }
+        .planner-cert-card {
+            background: rgba(1, 25, 42, 0.85) !important;
+            border: 1.5px solid rgba(0, 230, 118, 0.25) !important;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.1) !important;
+        }
+
+        #app-layout {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Sidebar Navigation --- */
+        #sidebar {
+            width: 320px;
+            background-color: var(--color-sidebar);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-right: 1px solid var(--color-card-border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 20px;
+            flex-shrink: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            padding-left: 10px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-blue));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            animation: pulse-glow 2.5s infinite;
+        }
+
+        .brand-text h1 {
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #FFF, #CBD5E1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--color-primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13.5px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            transition: transform 0.25s;
+        }
+
+        .nav-item:hover {
+            color: var(--color-text-main);
+            background-color: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-item:hover i {
+            transform: translateX(2px);
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(59, 130, 246, 0.15));
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-item.active i {
+            color: var(--color-primary);
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .civic-wallet {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--border-radius-md);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wallet-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .wallet-label {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .wallet-val {
+            font-family: var(--font-title);
+            font-size: 16px;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.3s;
+        }
+
+        .wallet-val.pulse {
+            transform: scale(1.15);
+            color: var(--color-primary);
+        }
+
+        /* --- Workspace Area --- */
+        #workspace {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #workspace-header {
+            height: 80px;
+            border-bottom: 1px solid var(--color-card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            background-color: rgba(9, 13, 26, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            flex-shrink: 0;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: var(--color-primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-title {
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .user-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .user-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            text-align: right;
+        }
+        .user-role {
+            font-size: 11px;
+            color: var(--color-primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: right;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-blue));
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-title);
+            font-weight: 800;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        #workspace-content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .sim-panel {
+            display: none;
+            width: 100%;
+            height: 100%;
+            animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .sim-panel.active {
+            display: block;
+        }
+
+        /* --- Cards and UI Atoms --- */
+        .glass-card {
+            background-color: var(--color-card);
+            border: 1px solid var(--color-card-border);
+            border-radius: var(--border-radius-md);
+            padding: 30px;
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .panel-heading {
+            margin-bottom: 24px;
+        }
+
+        .panel-heading h3 {
+            font-family: var(--font-title);
+            font-size: 24px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-heading p {
+            color: var(--color-text-muted);
+            font-size: 13.5px;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           TAB 1: ANALYSIS & DYNAMIC CHARTS (Donut + Details Grid)
+           ========================================================================== */
+        .budget-global-stat {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.08));
+            border: 1.5px dashed rgba(16, 185, 129, 0.25);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .stat-details h4 {
+            font-family: var(--font-title);
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, var(--color-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-details p {
+            font-size: 13px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        .stat-badge-large {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .stat-badge-large i {
+            color: var(--color-primary);
+            font-size: 16px;
+        }
+
+        .analysis-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 30px;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            background: rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: var(--border-radius-md);
+            padding: 30px 20px;
+            height: fit-content;
+        }
+
+        .caba-donut {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--color-primary) 0% 20.1%,      /* Educación 20.1% */
+                var(--color-blue) 20.1% 36.6%,      /* Salud 16.5% */
+                var(--color-warning) 36.6% 53.1%,   /* Seguridad 16.5% */
+                var(--color-purple) 53.1% 62.3%,    /* Promoción Social 9.2% */
+                #F43F5E 62.3% 80.3%,                /* Obras/Transporte 18.0% */
+                #64748B 80.3% 100%                  /* Admin/Servicios 19.7% */
+            );
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .donut-hole {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background-color: #0b0f1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.4);
+        }
+
+        .donut-lbl-amount {
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .donut-lbl-year {
+            font-size: 9px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .category-legend-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .legend-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .legend-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .legend-card.selected {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.18);
+        }
+
+        .leg-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .leg-color-badge {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .leg-texts h5 {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .leg-texts p {
+            font-size: 11px;
+            color: var(--color-text-muted);
+        }
+
+        .leg-pct {
+            font-family: var(--font-title);
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        /* Details Dynamic Info Box */
+        .details-viewer-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .details-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--color-text-muted);
+            padding: 80px 0;
+            gap: 15px;
+        }
+
+        .details-empty i {
+            font-size: 54px;
+            opacity: 0.2;
+            animation: bounce 2s infinite;
+        }
+
+        .details-content {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            animation: fade-in-up 0.4s ease forwards;
+        }
+
+        .details-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 16px;
+        }
+
+        .details-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            color: #fff;
+        }
+
+        .details-title h4 {
+            font-family: var(--font-title);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .details-title span {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .details-desc-p {
+            font-size: 13.5px;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        .details-desc-p strong {
+            color: #fff;
+        }
+
+        /* Specific funded items checklist */
+        .funded-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 18px;
+        }
+
+        .funded-checklist-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12.5px;
+        }
+
+        .check-item i {
+            color: var(--color-success);
+            font-size: 16px;
+        }
+
+        /* ==========================================================================
+           TAB 2: TAX CALCULATOR (Personal check)
+           ========================================================================== */
+        .calc-layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 40px;
+        }
+
+        .calc-form-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .calc-input-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .calc-input-field label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calc-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .calc-input-sign {
+            position: absolute;
+            left: 16px;
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--color-primary);
+            pointer-events: none;
+        }
+
+        .calc-input {
+            width: 100%;
+            background: rgba(0,0,0,0.25);
+            border: 2px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 14px 16px 14px 40px;
+            font-family: var(--font-title);
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            outline: none;
+            transition: all 0.25s;
+        }
+
+        .calc-input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+        }
+
+        .calc-suggestions-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .calc-suggestion-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .calc-chip {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            transition: all 0.2s;
+        }
+
+        .calc-chip:hover {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #fff;
+        }
+
+        /* Calculator Output Panel */
+        .calc-output-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .calc-output-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .calc-output-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.25s;
+        }
+
+        .calc-output-card:hover {
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .calc-out-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .calc-out-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .calc-out-texts h5 {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .calc-out-texts p {
+            font-size: 10px;
+            color: var(--color-text-muted);
+        }
+
+        .calc-out-amount {
+            font-family: var(--font-title);
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        /* ==========================================================================
+           TAB 3: CIVIC DICTIONARY (Simple Explanations)
+           ========================================================================== */
+        .dictionary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .dict-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: var(--border-radius-md);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+
+        .dict-card:hover {
+            border-color: rgba(16, 185, 129, 0.25);
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .dict-icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+
+        .dict-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .dict-desc {
+            font-size: 12.5px;
+            color: var(--color-text-muted);
+            line-height: 1.4;
+        }
+
+        .dict-analogy {
+            border-top: 1px dashed rgba(255,255,255,0.08);
+            padding-top: 12px;
+            font-size: 11px;
+            color: var(--color-primary);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* ==========================================================================
+           TAB 4: BUDGET PLANNER MINI-GAME
+           ========================================================================== */
+        .planner-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 30px;
+        }
+
+        .planner-sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .slider-card {
+            background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slider-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slider-lbl {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .slider-val-box {
+            font-family: var(--font-title);
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--color-primary);
+        }
+
+        .slider-control-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Custom premium sliders */
+        .range-slider {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.08);
+            outline: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+            transition: transform 0.1s;
+        }
+
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Planner dashboard status meters */
+        .planner-dashboard {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: fit-content;
+        }
+
+        .budget-pool-box {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid var(--color-card-border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .pool-number {
+            font-family: var(--font-title);
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--color-primary);
+            transition: all 0.3s;
+        }
+
+        .pool-number.warning {
+            color: var(--color-danger);
+            animation: bounce 0.4s ease;
+        }
+
+        .pool-lbl {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .gauge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .gauge-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .gauge-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-text-muted);
+        }
+
+        .gauge-track {
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .gauge-fill {
+            height: 100%;
+            border-radius: 3px;
+            width: 50%;
+            background: var(--color-primary);
+            transition: width 0.4s ease, background-color 0.4s ease;
+        }
+
+        /* Certificate visual overlay on success */
+        .cert-overlay {
+            background: #fff;
+            color: #1e293b;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: scale-up 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            position: relative;
+        }
+
+        .cert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 12px;
+        }
+
+        .cert-logo {
+            font-family: var(--font-title);
+            font-weight: 800;
+            font-size: 14px;
+            color: #065f46;
+            letter-spacing: 0.5px;
+        }
+
+        .cert-stamp {
+            border: 2px solid #059669;
+            color: #059669;
+            padding: 3px 8px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transform: rotate(-5deg);
+        }
+
+        .cert-body h5 {
+            font-family: var(--font-title);
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .cert-body p {
+            font-size: 11.5px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .cert-signers {
+            margin-top: 10px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        /* Buttons styles */
+        .btn-sim {
+            background: linear-gradient(135deg, var(--color-primary), #059669);
+            border: none;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            transition: all 0.25s;
+        }
+
+        .btn-sim:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-sim-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+            color: var(--color-text-main);
+        }
+
+        .btn-sim-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: none;
+        }
+
+        .btn-sim:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Global alerts box */
+        #alert-box {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            z-index: 10000;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--color-card-border);
+            padding: 12px 24px;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #alert-box.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        #alert-icon-circle {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 13px;
+            color: white;
+        }
+
+        #alert-msg {
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scale-up {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ==========================================================================
+           RESPONSIVE DESIGN SYSTEM & MEDIA QUERIES (100% Mobile & Tablet Compatible)
+           ========================================================================== */
+        
+        /* Mobile Hamburger Header Menu (Hidden by default on Desktop) */
+        #mobile-nav-bar {
+            display: none;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 199;
+        }
+
+        #mobile-menu-btn {
+            font-size: 24px;
+            color: #0284C7;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        #mobile-menu-btn:hover {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        /* Sidebar overlay for clicking away on mobile */
+        #sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 99;
+            animation: fade-in 0.25s ease forwards;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive rules */
+        @media (max-width: 991.98px) {
+            #mobile-nav-bar {
+                display: flex;
+            }
+
+            #app-layout {
+                flex-direction: column;
+                height: auto;
+                overflow: visible;
+            }
+
+            #sidebar {
+                position: fixed;
+                top: 0;
+                left: -320px; /* Hidden offscreen by default */
+                height: 100vh;
+                z-index: 200;
+                transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+                background-color: rgba(255, 255, 255, 0.95);
+            }
+
+            #sidebar.open {
+                left: 0;
+            }
+
+            #workspace {
+                width: 100%;
+                height: auto;
+                margin-top: 60px; /* Offset for fixed mobile top bar */
+                overflow: visible;
+            }
+
+            #workspace-header {
+                height: 70px;
+                padding: 0 20px;
+            }
+
+            .user-meta {
+                display: none; /* Hide name/role text to save space on mobile */
+            }
+
+            #workspace-content {
+                padding: 20px 16px;
+            }
+
+            /* Responsive columns for all layouts */
+            .analysis-layout, .calc-layout, .dictionary-grid, .planner-layout, .budget-kpis-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
+            .chart-container {
+                height: auto !important;
+                padding: 20px !important;
+                width: 100% !important;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .sim-panel {
+                height: auto;
+            }
+
+            .glass-card {
+                padding: 20px 16px !important;
+            }
+
+            .panel-heading h3 {
+                font-size: 20px !important;
+            }
+
+            .brand-text h1 {
+                font-size: 18px !important;
+            }
+
+            .budget-global-stat {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 14px !important;
+                padding: 18px !important;
+            }
+
+            /* Stack calculator outputs, dictionary grids, planner columns, etc. */
+            div[style*="grid-template-columns: repeat(3, 1fr)"],
+            div[style*="display: grid; grid-template-columns: repeat(3, 1fr)"],
+            .dictionary-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+
+            div[style*="grid-template-columns: repeat(2, 1fr)"],
+            div[style*="display: grid; grid-template-columns: repeat(2, 1fr)"],
+            .calc-output-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+
+            div[style*="grid-column: span 2"] {
+                grid-column: span 1 !important;
+            }
+
+            /* Re-style modal backdrops for full mobile width */
+            div[id*="-modal"] > div {
+                width: 95% !important;
+                padding: 20px 16px !important;
+            }
+            
+            /* Compact receipts */
+            div[style*="padding: 24px; border-radius: 16px"] {
+                padding: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Glowing Tech HUD SVG Background Overlay -->
+    <div class="cyber-background">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="dotGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="2" r="1.5" fill="#00E5FF" opacity="0.15" />
+                </pattern>
+            </defs>
+            <!-- Matrix dot grid across screen -->
+            <rect width="100%" height="100%" fill="url(#dotGrid)" />
+            
+            <!-- Concentric HUD rings at top-right -->
+            <g transform="translate(1600, 200)" class="cyber-pulse">
+                <circle cx="0" cy="0" r="150" stroke="#00E5FF" stroke-width="1.5" stroke-dasharray="10 15" fill="none" opacity="0.3" class="cyber-ring-rotate" />
+                <circle cx="0" cy="0" r="120" stroke="#00E5FF" stroke-width="0.8" fill="none" opacity="0.2" />
+                <circle cx="0" cy="0" r="90" stroke="#00E5FF" stroke-width="2" stroke-dasharray="80 20 40 10" fill="none" opacity="0.4" class="cyber-ring-rotate-reverse" />
+                <circle cx="0" cy="0" r="60" stroke="#00E5FF" stroke-width="0.5" stroke-dasharray="2 4" fill="none" opacity="0.2" />
+                <circle cx="0" cy="0" r="30" stroke="#00E5FF" stroke-width="2" fill="none" opacity="0.3" />
+            </g>
+
+            <!-- Concentric HUD rings at bottom-left -->
+            <g transform="translate(150, 850)" class="cyber-pulse">
+                <circle cx="0" cy="0" r="200" stroke="#00E5FF" stroke-width="1" stroke-dasharray="5 20" fill="none" opacity="0.25" class="cyber-ring-rotate-reverse" />
+                <circle cx="0" cy="0" r="160" stroke="#00E5FF" stroke-width="1.5" stroke-dasharray="40 10 90 20" fill="none" opacity="0.35" class="cyber-ring-rotate" />
+                <circle cx="0" cy="0" r="130" stroke="#00E5FF" stroke-width="0.5" fill="none" opacity="0.15" />
+                <circle cx="0" cy="0" r="80" stroke="#00E5FF" stroke-width="3" stroke-dasharray="20 180" fill="none" opacity="0.4" />
+                <circle cx="0" cy="0" r="40" stroke="#00E5FF" stroke-width="1" fill="none" opacity="0.2" />
+            </g>
+
+            <!-- Abstract tech circuit board trace lines -->
+            <g stroke="#00E5FF" stroke-width="1.5" fill="none" opacity="0.2">
+                <path d="M 50,150 L 250,150 L 320,220 L 320,400" />
+                <circle cx="50" cy="150" r="4" fill="#00E5FF" />
+                <circle cx="320" cy="400" r="4" fill="#00E5FF" />
+                
+                <path d="M 1800,900 L 1600,900 L 1520,820 L 1520,600" />
+                <circle cx="1800" cy="900" r="4" fill="#00E5FF" />
+                <circle cx="1520" cy="600" r="4" fill="#00E5FF" />
+
+                <path d="M 900,50 L 1050,50 L 1100,100 L 1100,200" stroke-dasharray="5 5" />
+                <circle cx="900" cy="50" r="3" fill="#00E5FF" />
+            </g>
+        </svg>
+    </div>
+
+    <!-- Global Alert popup -->
+    <div id="alert-box">
+        <div id="alert-icon-circle"><i class="ri-checkbox-circle-fill"></i></div>
+        <span id="alert-msg">Alerta cívica activa</span>
+    </div>
+
+    <!-- Mobile Navigation Header -->
+    <header id="mobile-nav-bar">
+        <button id="mobile-menu-btn" onclick="toggleMobileSidebar()"><i class="ri-menu-line"></i></button>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <img src="assets/logo.png" alt="Logo" style="width:32px; height:32px; border-radius:8px; border:1px solid #8DC63F; object-fit: contain; background: transparent;">
+            <span style="font-family:var(--font-title); font-weight:800; font-size:15px; color:#0F172A;">Vecinos</span>
+        </div>
+        <div style="width: 32px;"></div> <!-- visual spacer -->
+    </header>
+
+    <!-- Sidebar Dark Overlay Backdrop for Mobile -->
+    <div id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
+    <!-- App layout grid -->
+    <div id="app-layout">
+
+        <!-- 1. SIDEBAR -->
+        <aside id="sidebar">
+            <div>
+                <!-- Logo brand -->
+                <div class="brand">
+                    <img src="assets/logo.png" alt="Logo" class="brand-icon" style="object-fit: contain; border: 1px solid #8DC63F; background: transparent; padding: 2px;">
+                    <div class="brand-text">
+                        <h1>Vecinos</h1>
+                        <p>Presupuestos Abiertos</p>
+                    </div>
+                </div>
+
+                <!-- Navigation menu -->
+                <nav class="nav-menu">
+                    <a class="nav-item active" onclick="switchTab(1, this)"><i class="ri-pie-chart-line"></i> 1. Desglose del Gasto</a>
+                    <a class="nav-item" onclick="switchTab(2, this)"><i class="ri-calculator-line"></i> 2. Calculadora de Aporte</a>
+                    <a class="nav-item" onclick="switchTab(3, this)"><i class="ri-book-open-line"></i> 3. Glosario Cívico</a>
+                    <a class="nav-item" onclick="switchTab(4, this)"><i class="ri-sound-module-line"></i> 4. Simulador de Gestión</a>
+                </nav>
+            </div>
+
+            <!-- Profile state indicators -->
+            <div class="sidebar-footer">
+                <div class="civic-wallet">
+                    <div class="wallet-stat">
+                        <span class="wallet-label"><i class="ri-award-fill" style="color:var(--color-primary)"></i> Reputación Cívica</span>
+                        <span class="wallet-val" id="rep-val">120 pts</span>
+                    </div>
+                    <div class="wallet-stat">
+                        <span class="wallet-label"><i class="ri-calculator-fill" style="color:var(--color-blue)"></i> Auditorías CABA</span>
+                        <span class="wallet-val" id="audit-val">0 / 4</span>
+                    </div>
+                </div>
+                <a href="index.html" class="nav-item" style="border-top:1px solid rgba(255,255,255,0.04);margin-top:5px;justify-content:center;padding:12px 0;"><i class="ri-arrow-left-line"></i> Volver a la App Principal</a>
+            </div>
+        </aside>
+
+        <!-- 2. WORKSPACE -->
+        <main id="workspace">
+
+            <!-- Top Header bar -->
+            <header id="workspace-header">
+                <div class="header-left">
+                    <span class="header-badge">PRESUPUESTO CABA 2025</span>
+                    <h2 class="header-title" id="panel-title-text">Desglose Interactivo del Gasto</h2>
+                </div>
+                <div class="user-meta">
+                    <div>
+                        <div class="user-name">Eduardo</div>
+                        <div class="user-role">Auditor Cívico</div>
+                    </div>
+                    <div class="user-avatar">Ed</div>
+                </div>
+            </header>
+
+            <!-- 3. PANELS INTERACTIVE WORKSPACE -->
+            <div id="workspace-content">
+
+                <!-- ==========================================================================
+                   TAB 1: DYNAMIC BREAKDOWN & CHARTS
+                   ========================================================================== -->
+                <div class="sim-panel active" id="tab-1">
+                    
+                    <!-- Global Budget Summary banner -->
+                    <div class="budget-global-stat">
+                        <div class="stat-details">
+                            <p>MONTO TOTAL CONSOLIDADO CABA</p>
+                            <h4>$13,9 Billones de Pesos</h4>
+                        </div>
+                        <div class="stat-badge-large">
+                            <i class="ri-shield-check-fill"></i> EQUILIBRIO FISCAL Y FOCO SOCIAL
+                        </div>
+                    </div>
+
+                    <div class="analysis-layout">
+                        <!-- Left Conic Donut Chart -->
+                        <div class="chart-container">
+                            <div class="caba-donut">
+                                <div class="donut-hole">
+                                    <span class="donut-lbl-amount">$13,9T</span>
+                                    <span class="donut-lbl-year">CABA 2025</span>
+                                </div>
+                            </div>
+
+                            <!-- Legend Checklist list -->
+                            <div class="category-legend-list">
+                                <div class="legend-card" onclick="selectCategory('edu', this)" id="leg-card-edu">
+                                    <div class="leg-left">
+                                        <div class="leg-color-badge" style="background-color: var(--color-primary);"></div>
+                                        <div class="leg-texts">
+                                            <h5>Educación</h5>
+                                            <p>Escuelas, comedores y docentes</p>
+                                        </div>
+                                    </div>
+                                    <span class="leg-pct" style="color: var(--color-primary);">20.1%</span>
+                                </div>
+
+                                <div class="legend-card" onclick="selectCategory('health', this)">
+                                    <div class="leg-left">
+                                        <div class="leg-color-badge" style="background-color: var(--color-blue);"></div>
+                                        <div class="leg-texts">
+                                            <h5>Salud Pública</h5>
+                                            <p>Hospitales y centros clínicos</p>
+                                        </div>
+                                    </div>
+                                    <span class="leg-pct" style="color: var(--color-blue);">16.5%</span>
+                                </div>
+
+                                <div class="legend-card" onclick="selectCategory('security', this)">
+                                    <div class="leg-left">
+                                        <div class="leg-color-badge" style="background-color: var(--color-warning);"></div>
+                                        <div class="leg-texts">
+                                            <h5>Seguridad</h5>
+                                            <p>Policías, patrulleros y emergencias</p>
+                                        </div>
+                                    </div>
+                                    <span class="leg-pct" style="color: var(--color-warning);">16.5%</span>
+                                </div>
+
+                                <div class="legend-card" onclick="selectCategory('social', this)">
+                                    <div class="leg-left">
+                                        <div class="leg-color-badge" style="background-color: var(--color-purple);"></div>
+                                        <div class="leg-texts">
+                                            <h5>Promoción Social</h5>
+                                            <p>Asistencia a comedores y vulnerabilidad</p>
+                                        </div>
+                                    </div>
+                                    <span class="leg-pct" style="color: var(--color-purple);">9.2%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right details panel dynamic viewer -->
+                        <div class="glass-card" style="height:100%;">
+                            <div class="details-viewer-box" id="details-viewer-area">
+                                <div class="details-empty">
+                                    <i class="ri-pie-chart-2-line"></i>
+                                    <h4>Explora la Distribución Presupuestaria</h4>
+                                    <p>Haz clic en cualquier categoría del panel izquierdo (Educación, Salud, Seguridad o Promoción Social) para revelar qué financia detalladamente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================================
+                   TAB 2: TAX CALCULATOR (ABL, Patente)
+                   ========================================================================== -->
+                <div class="sim-panel" id="tab-2">
+                    <div class="calc-layout">
+                        <!-- Input form card -->
+                        <div class="glass-card calc-form-box">
+                            <div class="panel-heading" style="margin-bottom:10px;">
+                                <h3><i class="ri-hand-coin-line"></i> Tu Aporte en Perspectiva</h3>
+                                <p>Ingresa el monto mensual de tus impuestos cívicos (como ABL o Patente) para calcular exactamente a dónde viaja tu dinero.</p>
+                            </div>
+
+                            <div class="calc-input-field">
+                                <label>Monto Mensual Contribuido</label>
+                                <div class="calc-input-wrapper">
+                                    <span class="calc-input-sign">$</span>
+                                    <input type="number" id="tax-input-val" class="calc-input" placeholder="0" oninput="calculateTaxBreakdown(this.value)">
+                                </div>
+                            </div>
+
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <span class="calc-suggestions-title">Valores de Referencia Habituales</span>
+                                <div class="calc-suggestion-chips">
+                                    <button class="calc-chip" onclick="setCalculatedTax(8000)">ABL Promedio Mínimo ($8.000)</button>
+                                    <button class="calc-chip" onclick="setCalculatedTax(20000)">ABL / Patente Media ($20.000)</button>
+                                    <button class="calc-chip" onclick="setCalculatedTax(50000)">ABL Residencial Alto ($50.000)</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Outputs listing panel -->
+                        <div class="calc-output-panel">
+                            <div class="panel-heading" style="margin-bottom:10px;">
+                                <h3><i class="ri-bar-chart-2-line"></i> Distribución Exacta en Pesos</h3>
+                                <p>Esto es lo que estás financiando directamente de forma mensual con tu tasa tributaria local en CABA:</p>
+                            </div>
+
+                            <div class="calc-output-grid">
+                                <div class="calc-output-card">
+                                    <div class="calc-out-left">
+                                        <div class="calc-out-icon" style="background-color: var(--color-success);"><i class="ri-book-open-fill"></i></div>
+                                        <div class="calc-out-texts">
+                                            <h5>Educación (20.1%)</h5>
+                                            <p>Escuelas e insumos didácticos</p>
+                                        </div>
+                                    </div>
+                                    <span class="calc-out-amount" id="out-edu">$0</span>
+                                </div>
+
+                                <div class="calc-output-card">
+                                    <div class="calc-out-left">
+                                        <div class="calc-out-icon" style="background-color: var(--color-blue);"><i class="ri-heart-pulse-fill"></i></div>
+                                        <div class="calc-out-texts">
+                                            <h5>Salud Pública (16.5%)</h5>
+                                            <p>Guardias y hospitales de CABA</p>
+                                        </div>
+                                    </div>
+                                    <span class="calc-out-amount" style="color:var(--color-blue);" id="out-health">$0</span>
+                                </div>
+
+                                <div class="calc-output-card">
+                                    <div class="calc-out-left">
+                                        <div class="calc-out-icon" style="background-color: var(--color-warning);"><i class="ri-shield-fill"></i></div>
+                                        <div class="calc-out-texts">
+                                            <h5>Seguridad (16.5%)</h5>
+                                            <p>Policías y patrullaje vecinal</p>
+                                        </div>
+                                    </div>
+                                    <span class="calc-out-amount" style="color:var(--color-warning);" id="out-security">$0</span>
+                                </div>
+
+                                <div class="calc-output-card">
+                                    <div class="calc-out-left">
+                                        <div class="calc-out-icon" style="background-color: var(--color-purple);"><i class="ri-group-fill"></i></div>
+                                        <div class="calc-out-texts">
+                                            <h5>Acción Social (9.2%)</h5>
+                                            <p>Asistencia a comedores y vulnerabilidad</p>
+                                        </div>
+                                    </div>
+                                    <span class="calc-out-amount" style="color:var(--color-purple);" id="out-social">$0</span>
+                                </div>
+
+                                <div class="calc-output-card">
+                                    <div class="calc-out-left">
+                                        <div class="calc-out-icon" style="background-color: #F43F5E;"><i class="ri-roadster-fill"></i></div>
+                                        <div class="calc-out-texts">
+                                            <h5>Obras y Transporte (18.0%)</h5>
+                                            <p>Pavimentación y mantenimiento de subtes</p>
+                                        </div>
+                                    </div>
+                                    <span class="calc-out-amount" style="color:#F43F5E;" id="out-obras">$0</span>
+                                </div>
+
+                                <div class="calc-output-card">
+                                    <div class="calc-out-left">
+                                        <div class="calc-out-icon" style="background-color: #64748B;"><i class="ri-settings-3-fill"></i></div>
+                                        <div class="calc-out-texts">
+                                            <h5>Admin. y Servicios (19.7%)</h5>
+                                            <p>Sueldos administrativos y recolección</p>
+                                        </div>
+                                    </div>
+                                    <span class="calc-out-amount" style="color:#64748B;" id="out-admin">$0</span>
+                                </div>
+                            </div>
+
+                            <button class="btn-sim btn-sim-secondary" style="margin-top:10px; width:fit-content; align-self:center;" onclick="claimTaxAuditPoints()" id="tax-claim-btn" disabled>
+                                <i class="ri-checkbox-circle-line"></i> Completar Auditoría Fiscal (+10pts Reputación)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================================
+                   TAB 3: CIVIC GLOSSARY
+                   ========================================================================== -->
+                <div class="sim-panel" id="tab-3">
+                    <div class="panel-heading">
+                        <h3><i class="ri-book-open-line"></i> Glosario Cívico: Finanzas Públicas en Español Sencillo</h3>
+                        <p>Los presupuestos están llenos de términos complejos. Aquí los traducimos al lenguaje familiar con analogías que cualquiera puede entender.</p>
+                    </div>
+
+                    <div class="dictionary-grid">
+                        <div class="dict-card">
+                            <div class="dict-icon-box"><i class="ri-wallet-line"></i></div>
+                            <h4 class="dict-title">Gasto Corriente</h4>
+                            <p class="dict-desc">Se refiere a los gastos fijos e indispensables que el Estado realiza diariamente para mantener el motor cívico funcionando y los servicios públicos abiertos.</p>
+                            <div class="dict-analogy">
+                                <i class="ri-home-fill"></i> <strong>Analogía Hogareña:</strong> La comida del mes, el alquiler, los cuadernos escolares y la cuenta de luz que hay que pagar sí o sí para vivir.
+                            </div>
+                        </div>
+
+                        <div class="dict-card">
+                            <div class="dict-icon-box" style="background-color:rgba(59,130,246,0.1); color:var(--color-blue);"><i class="ri-tools-line"></i></div>
+                            <h4 class="dict-title">Gasto de Capital</h4>
+                            <p class="dict-desc">Dinero que el municipio no gasta en consumo inmediato, sino que invierte en infraestructura duradera y equipamientos de largo plazo.</p>
+                            <div class="dict-analogy" style="color:var(--color-blue);">
+                                <i class="ri-home-fill"></i> <strong>Analogía Hogareña:</strong> Comprar una computadora para que estudien los chicos o reparar el techo roto de casa para valorizar el hogar.
+                            </div>
+                        </div>
+
+                        <div class="dict-card">
+                            <div class="dict-icon-box" style="background-color:rgba(139,92,246,0.1); color:var(--color-purple);"><i class="ri-coins-line"></i></div>
+                            <h4 class="dict-title">Superávit Financiero</h4>
+                            <p class="dict-desc">El resultado fiscal positivo que se consigue cuando el volumen total de ingresos es mayor que los gastos, incluyendo el pago de deudas e intereses cívicos.</p>
+                            <div class="dict-analogy" style="color:var(--color-purple);">
+                                <i class="ri-home-fill"></i> <strong>Analogía Hogareña:</strong> Lograr ahorrar unos pesos a fin de mes en la alcancía después de haber pagado las tarjetas y las cuotas del préstamo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==========================================================================
+                   TAB 4: BUDGET PLANNER MINI-GAME
+                   ========================================================================== -->
+                <div class="sim-panel" id="tab-4">
+                    <div class="planner-layout">
+                        <!-- Sliders Panel -->
+                        <div class="glass-card" style="display:flex; flex-direction:column; gap:20px;">
+                            <div class="panel-heading" style="margin-bottom:0;">
+                                <h3><i class="ri-equalizer-line"></i> Redistribuidor del Presupuesto Vecinal</h3>
+                                <p>Juega a ser el planificador del gobierno. Tienes 100 puntos en total de presupuesto para distribuir entre las áreas clave. Ajusta las barras y equilibra los gastos.</p>
+                            </div>
+
+                            <div class="planner-sliders">
+                                <!-- Slider 1: Educación -->
+                                <div class="slider-card">
+                                    <div class="slider-meta">
+                                        <span class="slider-lbl"><i class="ri-book-open-line" style="color:var(--color-primary)"></i> Educación</span>
+                                        <span class="slider-val-box" id="sl-val-edu">20%</span>
+                                    </div>
+                                    <div class="slider-control-row">
+                                        <input type="range" class="range-slider" min="5" max="40" value="20" id="sl-input-edu" oninput="updatePlannerSliders('edu', this.value)">
+                                    </div>
+                                </div>
+
+                                <!-- Slider 2: Salud -->
+                                <div class="slider-card">
+                                    <div class="slider-meta">
+                                        <span class="slider-lbl"><i class="ri-heart-pulse-line" style="color:var(--color-blue)"></i> Salud Pública</span>
+                                        <span class="slider-val-box" id="sl-val-health" style="color:var(--color-blue)">16%</span>
+                                    </div>
+                                    <div class="slider-control-row">
+                                        <input type="range" class="range-slider" min="5" max="40" value="16" id="sl-input-health" style="background:rgba(59,130,246,0.1);" oninput="updatePlannerSliders('health', this.value)">
+                                    </div>
+                                </div>
+
+                                <!-- Slider 3: Seguridad -->
+                                <div class="slider-card">
+                                    <div class="slider-meta">
+                                        <span class="slider-lbl"><i class="ri-shield-line" style="color:var(--color-warning)"></i> Seguridad Vecinal</span>
+                                        <span class="slider-val-box" id="sl-val-security" style="color:var(--color-warning)">16%</span>
+                                    </div>
+                                    <div class="slider-control-row">
+                                        <input type="range" class="range-slider" min="5" max="40" value="16" id="sl-input-security" style="background:rgba(245,158,11,0.1);" oninput="updatePlannerSliders('security', this.value)">
+                                    </div>
+                                </div>
+
+                                <!-- Slider 4: Promoción Social -->
+                                <div class="slider-card">
+                                    <div class="slider-meta">
+                                        <span class="slider-lbl"><i class="ri-group-line" style="color:var(--color-purple)"></i> Acción Social</span>
+                                        <span class="slider-val-box" id="sl-val-social" style="color:var(--color-purple)">9%</span>
+                                    </div>
+                                    <div class="slider-control-row">
+                                        <input type="range" class="range-slider" min="5" max="25" value="9" id="sl-input-social" style="background:rgba(139,92,246,0.1);" oninput="updatePlannerSliders('social', this.value)">
+                                    </div>
+                                </div>
+
+                                <!-- Slider 5: Administración Pública -->
+                                <div class="slider-card">
+                                    <div class="slider-meta">
+                                        <span class="slider-lbl"><i class="ri-settings-3-line" style="color:#64748B"></i> Admin. Gubernamental</span>
+                                        <span class="slider-val-box" id="sl-val-admin" style="color:#64748B">39%</span>
+                                    </div>
+                                    <div class="slider-control-row">
+                                        <input type="range" class="range-slider" min="10" max="50" value="39" id="sl-input-admin" style="background:rgba(100,116,139,0.1);" oninput="updatePlannerSliders('admin', this.value)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Gaugues & Stats side -->
+                        <div class="planner-dashboard">
+                            <!-- Budget Pool left meter -->
+                            <div class="budget-pool-box">
+                                <span class="pool-number" id="planner-pool-val">0 / 100</span>
+                                <span class="pool-lbl" id="planner-pool-lbl">Puntos Distribuidos</span>
+                            </div>
+
+                            <!-- Indicator Gauges -->
+                            <div class="gauge-list">
+                                <h4 style="font-family:var(--font-title); font-size:15px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:10px;">Medidores de Rendimiento de la Ciudad</h4>
+                                
+                                <div class="gauge-item">
+                                    <div class="gauge-labels">
+                                        <span>Satisfacción Pública</span>
+                                        <span id="g-lbl-satisfaction">52%</span>
+                                    </div>
+                                    <div class="gauge-track">
+                                        <div class="gauge-fill" id="g-fill-satisfaction" style="width: 52%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="gauge-item">
+                                    <div class="gauge-labels">
+                                        <span>Capacidad Sanitaria y Clínica</span>
+                                        <span id="g-lbl-health">48%</span>
+                                    </div>
+                                    <div class="gauge-track">
+                                        <div class="gauge-fill" id="g-fill-health" style="width: 48%; background-color: var(--color-blue);"></div>
+                                    </div>
+                                </div>
+
+                                <div class="gauge-item">
+                                    <div class="gauge-labels">
+                                        <span>Seguridad Urbana y Calles</span>
+                                        <span id="g-lbl-security">50%</span>
+                                    </div>
+                                    <div class="gauge-track">
+                                        <div class="gauge-fill" id="g-fill-security" style="width: 50%; background-color: var(--color-warning);"></div>
+                                    </div>
+                                </div>
+
+                                <div class="gauge-item">
+                                    <div class="gauge-labels">
+                                        <span>Eficiencia de Cuentas Estatales</span>
+                                        <span id="g-lbl-efficiency">65%</span>
+                                    </div>
+                                    <div class="gauge-track">
+                                        <div class="gauge-fill" id="g-fill-efficiency" style="width: 65%; background-color: var(--color-purple);"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn-sim" id="planner-submit-btn" onclick="submitPlannerBudget()"><i class="ri-checkbox-circle-line"></i> Presentar Presupuesto CABA</button>
+
+                            <!-- Certification of approval vector -->
+                            <div class="cert-overlay" id="planner-cert-view">
+                                <div class="cert-header">
+                                    <span class="cert-logo"><i class="ri-pulse-line"></i> GESTIÓN VECINAL CABA</span>
+                                    <span class="cert-stamp">AVALADO CIUDADANO</span>
+                                </div>
+                                <div class="cert-body">
+                                    <h5>Proyecto de Ley: Presupuesto Participativo CABA</h5>
+                                    <p>Certificamos que el planificador vecinal ha diseñado una distribución presupuestaria consistente, priorizando eficientemente las áreas de salud, educación y seguridad ciudadana.</p>
+                                </div>
+                                <div class="cert-signers">
+                                    <span>FECHA: 2026</span>
+                                    <span>AUDITORÍA: Verificada</span>
+                                </div>
+                                <button class="btn-sim" style="margin-top:10px;" onclick="claimPlannerPoints()"><i class="ri-award-fill"></i> Reclamar +35pts Reputación</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================================================
+       JAVASCRIPT DYNAMIC DATA CONTROLLERS & LOGIC
+       ========================================================================== -->
+    <script>
+        // --- GLOBAL STATE ---
+        let simState = {
+            reputacion: 120,
+            auditorias: 0,
+            taxVal: 0,
+            taxAudited: false,
+            plannerEdu: 20,
+            plannerHealth: 16,
+            plannerSecurity: 16,
+            plannerSocial: 9,
+            plannerAdmin: 39,
+            plannerPoints: 100,
+            plannerSubmitted: false
+        };
+
+        // Custom Alerts popup
+        function triggerAlert(text, type = 'info') {
+            const overlay = document.getElementById('alert-box');
+            const icon = document.getElementById('alert-icon-circle');
+            const txt = document.getElementById('alert-msg');
+            
+            txt.textContent = text;
+            icon.style.backgroundColor = type === 'success' ? 'var(--color-success)' : type === 'danger' ? 'var(--color-danger)' : type === 'warning' ? 'var(--color-warning)' : 'var(--color-blue)';
+            icon.innerHTML = type === 'success' ? '<i class="ri-checkbox-circle-fill"></i>' : type === 'danger' ? '<i class="ri-close-circle-fill"></i>' : type === 'warning' ? '<i class="ri-alert-fill"></i>' : '<i class="ri-information-fill"></i>';
+            
+            overlay.classList.add('show');
+            setTimeout(() => {
+                overlay.classList.remove('show');
+            }, 3000);
+        }
+
+        // Wallet points updates
+        function addReputation(points) {
+            simState.reputacion += points;
+            const cnt = document.getElementById('rep-val');
+            cnt.textContent = simState.reputacion + " pts";
+            cnt.classList.add('pulse');
+            setTimeout(() => cnt.classList.remove('pulse'), 400);
+            
+            triggerAlert(`+${points} Puntos de Reputación Cívica`, 'success');
+        }
+
+        function incrementAuditCount() {
+            simState.auditorias += 1;
+            if(simState.auditorias > 4) simState.auditorias = 4;
+            document.getElementById('audit-val').textContent = `${simState.auditorias} / 4`;
+        }
+
+        // Switch panels sidebar handler
+        function switchTab(tabNum, element) {
+            document.querySelectorAll('.sim-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(`tab-${tabNum}`).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if(element) element.classList.add('active');
+            
+            const titles = {
+                1: "Desglose Interactivo del Gasto",
+                2: "Calculadora de Aporte Fiscal",
+                3: "Glosario Cívico Abierto",
+                4: "Simulador de Gestión CABA"
+            };
+            document.getElementById('panel-title-text').textContent = titles[tabNum];
+
+            // Close mobile sidebar menu drawer automatically
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar && sidebar.classList.contains('open')) {
+                toggleMobileSidebar();
+            }
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar && overlay) {
+                if (sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                    overlay.style.display = 'none';
+                } else {
+                    sidebar.classList.add('open');
+                    overlay.style.display = 'block';
+                }
+            }
+        }
+
+        // ==========================================================================
+        // TAB 1 CONTROLLERS: DYNAMIC BREAKDOWN VIEWER
+        // ==========================================================================
+        const categoryDetails = {
+            'edu': {
+                name: 'Educación y Desarrollo Cognitivo',
+                pct: '20.1%',
+                amount: '$2,79 Billones',
+                desc: 'La educación representa el <strong>pilar de inversión cívica más importante</strong> en la Ciudad de Buenos Aires para el ejercicio presupuestario. Estos fondos se destinan principalmente a la mantención física de establecimientos y sueldos docentes.',
+                color: 'var(--color-primary)',
+                checklist: [
+                    'Sueldos de más de 55.000 docentes del distrito.',
+                    'Mantenimiento y refacción de más de 850 escuelas públicas.',
+                    'Viandas de almuerzo y desayuno escolar diario (racionamiento cívico).',
+                    'Equipamiento tecnológico y conectividad de aulas digitales.'
+                ]
+            },
+            'health': {
+                name: 'Salud Pública e Infraestructura Hospitalaria',
+                pct: '16.5%',
+                amount: '$2,29 Billones',
+                desc: 'Destinado al sostenimiento de toda la <strong>red de salud cívica e infraestructura hospitalaria</strong>. El financiamiento garantiza guardias activas las 24 horas y el abastecimiento de insumos sanitarios esenciales.',
+                color: 'var(--color-blue)',
+                checklist: [
+                    'Funcionamiento de los 34 Hospitales Públicos de CABA.',
+                    'Compra de remedios públicos y vacunas del calendario.',
+                    'Remodelación y aparatología de alta complejidad.',
+                    'Guardias de emergencias sanitarias las 24 horas del día.'
+                ]
+            },
+            'security': {
+                name: 'Seguridad Ciudadana y Prevención Vecinal',
+                pct: '16.5%',
+                amount: '$2,29 Billones',
+                desc: 'Financiamiento directo para el equipamiento, capacitación y movilización policial. El objetivo principal es mantener la <strong>presencia policial activa y de emergencias</strong> en las comunas.',
+                color: 'var(--color-warning)',
+                checklist: [
+                    'Combustible y mantenimiento de más de 1.800 patrulleros.',
+                    'Salarios de los agentes policiales y bomberos de la Ciudad.',
+                    'Sostenimiento de la red de más de 15.000 cámaras de vigilancia.',
+                    'Equipamiento de chalecos antibalas, radios y uniformes.'
+                ]
+            },
+            'social': {
+                name: 'Promoción y Acción Social Comunitaria',
+                pct: '9.2%',
+                amount: '$1,27 Billones',
+                desc: 'Fondos destinados a amortiguar las necesidades de los sectores más vulnerables de la Ciudad, apoyando la <strong>nutrición comunitaria, subsidios habitacionales y reinserción</strong>.',
+                color: 'var(--color-purple)',
+                checklist: [
+                    'Asistencia alimentaria y subsidios a más de 450 comedores.',
+                    'Programas de contención para personas en situación de calle.',
+                    'Subsidios habitacionales directos y reinserción laboral.',
+                    'Talleres de capacitación de oficios en barrios vulnerables.'
+                ]
+            }
+        };
+
+        function selectCategory(catKey, element) {
+            // Remove previous selections
+            document.querySelectorAll('.legend-card').forEach(c => c.classList.remove('selected'));
+            if(element) element.classList.add('selected');
+            
+            const viewer = document.getElementById('details-viewer-area');
+            const data = categoryDetails[catKey];
+            
+            viewer.innerHTML = `
+                <div class="details-content" style="display:flex; flex-direction:column; gap:20px;">
+                    <div class="details-header">
+                        <div class="details-icon" style="background-color: ${data.color};"><i class="ri-shield-user-fill"></i></div>
+                        <div class="details-title">
+                            <h4>${data.name}</h4>
+                            <span>Participación: ${data.pct} • Suma: ${data.amount}</span>
+                        </div>
+                    </div>
+
+                    <p class="details-desc-p">${data.desc}</p>
+
+                    <div class="funded-checklist">
+                        <span class="funded-checklist-title">Qué financia esta partida directamente:</span>
+                        ${data.checklist.map(item => `
+                            <div class="check-item">
+                                <i class="ri-checkbox-circle-fill"></i>
+                                <span>${item}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            incrementAuditCount();
+            triggerAlert(`Análisis de ${data.name} completado`, 'primary');
+        }
+
+        // ==========================================================================
+        // TAB 2 CONTROLLERS: TAX CALCULATOR
+        // ==========================================================================
+        function calculateTaxBreakdown(val) {
+            const amount = parseFloat(val) || 0;
+            simState.taxVal = amount;
+            
+            const edu = amount * 0.201;
+            const health = amount * 0.165;
+            const security = amount * 0.165;
+            const social = amount * 0.092;
+            const obras = amount * 0.18;
+            const admin = amount * 0.197;
+            
+            document.getElementById('out-edu').textContent = `$${edu.toLocaleString('es-ES', {maximumFractionDigits:0})}`;
+            document.getElementById('out-health').textContent = `$${health.toLocaleString('es-ES', {maximumFractionDigits:0})}`;
+            document.getElementById('out-security').textContent = `$${security.toLocaleString('es-ES', {maximumFractionDigits:0})}`;
+            document.getElementById('out-social').textContent = `$${social.toLocaleString('es-ES', {maximumFractionDigits:0})}`;
+            document.getElementById('out-obras').textContent = `$${obras.toLocaleString('es-ES', {maximumFractionDigits:0})}`;
+            document.getElementById('out-admin').textContent = `$${admin.toLocaleString('es-ES', {maximumFractionDigits:0})}`;
+            
+            // Enable claim button if value is substantial
+            const btn = document.getElementById('tax-claim-btn');
+            if (amount >= 500 && !simState.taxAudited) {
+                btn.removeAttribute('disabled');
+                btn.className = "btn-sim btn-sim-success";
+            } else {
+                btn.setAttribute('disabled', 'true');
+                btn.className = "btn-sim btn-sim-secondary";
+            }
+        }
+
+        function setCalculatedTax(amount) {
+            document.getElementById('tax-input-val').value = amount;
+            calculateTaxBreakdown(amount);
+        }
+
+        function claimTaxAuditPoints() {
+            if(simState.taxAudited) return;
+            simState.taxAudited = true;
+            
+            const btn = document.getElementById('tax-claim-btn');
+            btn.setAttribute('disabled', 'true');
+            btn.className = "btn-sim btn-sim-secondary";
+            btn.innerHTML = '<i class="ri-checkbox-circle-fill"></i> Auditoría Fiscal Completada';
+            btn.style.cursor = "not-allowed";
+            
+            addReputation(10);
+            incrementAuditCount();
+            triggerAlert("¡Auditoría de tasa local registrada!", "success");
+        }
+
+        // ==========================================================================
+        // TAB 4 CONTROLLERS: PLANNER MINI-GAME
+        // ==========================================================================
+        function updatePlannerSliders(cat, val) {
+            const v = parseInt(val) || 0;
+            
+            if(cat === 'edu') simState.plannerEdu = v;
+            if(cat === 'health') simState.plannerHealth = v;
+            if(cat === 'security') simState.plannerSecurity = v;
+            if(cat === 'social') simState.plannerSocial = v;
+            if(cat === 'admin') simState.plannerAdmin = v;
+            
+            document.getElementById(`sl-val-${cat}`).textContent = `${v}%`;
+            
+            // Calculate sum
+            const sum = simState.plannerEdu + simState.plannerHealth + simState.plannerSecurity + simState.plannerSocial + simState.plannerAdmin;
+            simState.plannerPoints = sum;
+            
+            const pool = document.getElementById('planner-pool-val');
+            pool.textContent = `${sum} / 100`;
+            
+            const poolLbl = document.getElementById('planner-pool-lbl');
+            const submitBtn = document.getElementById('planner-submit-btn');
+            
+            if (sum > 100) {
+                pool.className = "pool-number warning";
+                poolLbl.textContent = "¡Exceso de Puntos! Presupuesto Deficitario";
+                poolLbl.style.color = "var(--color-danger)";
+                submitBtn.setAttribute('disabled', 'true');
+            } else if (sum < 100) {
+                pool.className = "pool-number";
+                poolLbl.textContent = "Faltan Puntos para Completar Presupuesto";
+                poolLbl.style.color = "var(--color-text-muted)";
+                submitBtn.setAttribute('disabled', 'true');
+            } else {
+                pool.className = "pool-number";
+                poolLbl.textContent = "Presupuesto Balanceado Correctamente";
+                poolLbl.style.color = "var(--color-primary)";
+                submitBtn.removeAttribute('disabled');
+            }
+            
+            // Recalculate City Indicators based on sliders
+            recalculateCityGauges();
+        }
+
+        function recalculateCityGauges() {
+            // Satisfaction increases if Education, Health, and Social Promotion are high
+            let sat = Math.floor((simState.plannerEdu * 1.5) + (simState.plannerHealth * 1.0) + (simState.plannerSocial * 2.0));
+            if(sat > 100) sat = 100;
+            document.getElementById('g-lbl-satisfaction').textContent = `${sat}%`;
+            document.getElementById('g-fill-satisfaction').style.width = `${sat}%`;
+            
+            // Health Capacity is direct function of Health slider
+            let heal = Math.floor(simState.plannerHealth * 3.0);
+            if(heal > 100) heal = 100;
+            document.getElementById('g-lbl-health').textContent = `${heal}%`;
+            document.getElementById('g-fill-health').style.width = `${heal}%`;
+            
+            // Security is function of Security slider
+            let sec = Math.floor(simState.plannerSecurity * 3.0);
+            if(sec > 100) sec = 100;
+            document.getElementById('g-lbl-security').textContent = `${sec}%`;
+            document.getElementById('g-fill-security').style.width = `${sec}%`;
+            
+            // Efficiency increases if Administration is low
+            let eff = Math.floor(100 - (simState.plannerAdmin * 1.4));
+            if(eff > 100) eff = 100;
+            if(eff < 10) eff = 10;
+            document.getElementById('g-lbl-efficiency').textContent = `${eff}%`;
+            document.getElementById('g-fill-efficiency').style.width = `${eff}%`;
+        }
+
+        function submitPlannerBudget() {
+            if(simState.plannerPoints !== 100) {
+                triggerAlert("Debes distribuir exactamente 100 puntos", "danger");
+                return;
+            }
+            
+            triggerAlert("Validando consistencia macroeconómica en CABA...", "warning");
+            
+            const submitBtn = document.getElementById('planner-submit-btn');
+            submitBtn.innerHTML = '<i class="ri-loader-4-line ri-spin"></i> Procesando ley...';
+            submitBtn.setAttribute('disabled', 'true');
+            
+            setTimeout(() => {
+                submitBtn.style.display = "none";
+                document.getElementById('planner-cert-view').style.display = "flex";
+                triggerAlert("¡Presupuesto validado y presentado ante la legislatura!", "success");
+            }, 1500);
+        }
+
+        function claimPlannerPoints() {
+            addReputation(35);
+            incrementAuditCount();
+            
+            // Reset Planner sliders
+            simState.plannerEdu = 20;
+            simState.plannerHealth = 16;
+            simState.plannerSecurity = 16;
+            simState.plannerSocial = 9;
+            simState.plannerAdmin = 39;
+            
+            document.getElementById('sl-input-edu').value = 20;
+            document.getElementById('sl-input-health').value = 16;
+            document.getElementById('sl-input-security').value = 16;
+            document.getElementById('sl-input-social').value = 9;
+            document.getElementById('sl-input-admin').value = 39;
+            
+            updatePlannerSliders('edu', 20);
+            updatePlannerSliders('health', 16);
+            updatePlannerSliders('security', 16);
+            updatePlannerSliders('social', 9);
+            updatePlannerSliders('admin', 39);
+            
+            document.getElementById('planner-cert-view').style.display = "none";
+            
+            const submitBtn = document.getElementById('planner-submit-btn');
+            submitBtn.style.display = "inline-flex";
+            submitBtn.innerHTML = '<i class="ri-checkbox-circle-line"></i> Presentar Presupuesto CABA';
+            
+            triggerAlert("¡Proyecto archivado y enviado a comisiones legislativas CABA!", "success");
+        }
+
+        // --- BOOTSTRAP CATEGORY AT START ---
+        window.addEventListener('DOMContentLoaded', () => {
+            selectCategory('edu', document.getElementById('leg-card-edu'));
+        });
+    </script>
+</body>
+</html>

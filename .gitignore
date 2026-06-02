@@ -1,0 +1,4 @@
+localtunnel.log
+localtunnel_err.log
+.gemini/
+*.log
