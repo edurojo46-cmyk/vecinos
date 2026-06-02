@@ -40,13 +40,15 @@ body {
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 2px solid #00D2FF !important;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+    /* Handle mobile safe area and status bar overlap */
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
 }
 
 .mobile-header-top {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 16px;
+    padding: 6px 16px 10px;
 }
 
 .header-actions {
@@ -207,11 +209,11 @@ body {
     transform: translateX(10px);
     background: #f0f4f8;
     z-index: 1;
-    padding-top: 50px;
+    padding-top: calc(68px + env(safe-area-inset-top, 0px));
 }
 
 #screen-splash {
-    padding-top: 0;
+    padding-top: calc(68px + env(safe-area-inset-top, 0px)) !important;
 }
 
 #screen-map {
@@ -700,7 +702,7 @@ body {
 
 /* Mis Intenciones Screen */
 #screen-intenciones {
-    padding-top: 50px;
+    padding-top: calc(68px + env(safe-area-inset-top, 0px));
 }
 
 .intenciones-scrollarea {
@@ -3556,7 +3558,7 @@ body {
 /* CÃ“MO REZAR EL ROSARIO                     */
 /* ========================================= */
 #screen-como-rezar {
-    padding-top: 50px;
+    padding-top: calc(68px + env(safe-area-inset-top, 0px));
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -8585,7 +8587,7 @@ body {
 
 @media (max-width: 1023px) {
     #screen-rezo {
-        padding-top: 50px;
+        padding-top: calc(68px + env(safe-area-inset-top, 0px));
     }
 }
 
