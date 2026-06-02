@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Vecinos - Simulador de Participación y Servicios Comunitarios</title>
     <!-- Premium Fonts: Plus Jakarta Sans for UI & Outfit for Titles -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1873,18 +1873,18 @@
         /* Mobile Hamburger Header Menu (Hidden by default on Desktop) */
         #mobile-nav-bar {
             display: none;
-            height: calc(64px + env(safe-area-inset-top, 0px));
-            background: rgba(0, 18, 26, 0.85) !important;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.5) !important;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 2px solid #00D2FF !important;
             align-items: center;
             justify-content: space-between;
-            padding: calc(env(safe-area-inset-top, 0px) + 8px) 20px 0;
+            padding: 40px 20px 0;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            right: 0;
             z-index: 199;
             box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
         }
@@ -2006,7 +2006,7 @@
             #workspace {
                 width: 100%;
                 height: auto;
-                margin-top: calc(64px + env(safe-area-inset-top, 0px)); /* Offset for fixed mobile top bar */
+                margin-top: 100px; /* Offset for fixed mobile top bar */
                 overflow: visible;
             }
 

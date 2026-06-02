@@ -35,13 +35,13 @@ body {
     left: 0;
     width: 100%;
     z-index: 200;
-    background: rgba(0, 18, 26, 0.85) !important;
+    background: rgba(0, 0, 0, 0.5) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 2px solid #00D2FF !important;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
     /* Handle mobile safe area and status bar overlap */
-    padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+    padding-top: 40px;
 }
 
 .mobile-header-top {
@@ -209,11 +209,11 @@ body {
     transform: translateX(10px);
     background: #f0f4f8;
     z-index: 1;
-    padding-top: calc(68px + env(safe-area-inset-top, 0px));
+    padding-top: 100px;
 }
 
 #screen-splash {
-    padding-top: calc(68px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: 100px !important;
 }
 
 #screen-map {
@@ -702,7 +702,7 @@ body {
 
 /* Mis Intenciones Screen */
 #screen-intenciones {
-    padding-top: calc(68px + env(safe-area-inset-top, 0px));
+    padding-top: 100px;
 }
 
 .intenciones-scrollarea {
@@ -1022,6 +1022,10 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+}
+
+.buscar-topbar {
+    padding-top: 40px !important;
 }
 
 .buscar-topbar h2 {
@@ -2448,7 +2452,7 @@ body {
     display: flex;
     justify-content: flex-start;
     padding: 12px 12px 18px;
-    background: rgba(0, 18, 26, 0.85) !important;
+    background: rgba(0, 0, 0, 0.5) !important;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border-top: 2px solid #00D2FF !important;
@@ -3268,7 +3272,7 @@ body {
         left: 0;
         width: 100%;
         z-index: 100;
-        background: rgba(0, 18, 26, 0.85) !important;
+        background: rgba(0, 0, 0, 0.5) !important;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-bottom: 2px solid #00D2FF !important;
@@ -3558,7 +3562,7 @@ body {
 /* CÃ“MO REZAR EL ROSARIO                     */
 /* ========================================= */
 #screen-como-rezar {
-    padding-top: calc(68px + env(safe-area-inset-top, 0px));
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -8587,7 +8591,7 @@ body {
 
 @media (max-width: 1023px) {
     #screen-rezo {
-        padding-top: calc(68px + env(safe-area-inset-top, 0px));
+        padding-top: 100px;
     }
 }
 
