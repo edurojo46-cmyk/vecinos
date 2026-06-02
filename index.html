@@ -32,7 +32,7 @@ if(window.caches){caches.keys().then(function(n){n.forEach(function(k){caches.de
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="index.css?v=347">
+    <link rel="stylesheet" href="index.css?v=348">
     <script>
         // FIX: Force unregister service workers on ALL environments to kill aggressive caching
         if ('serviceWorker' in navigator) {
@@ -299,14 +299,14 @@ window.CustomUI = {
         <nav class="mobile-header-nav" id="mobile-nav-links">
             <a href="#" class="active" onclick="app.mobileNav('screen-splash')"><i class="ri-home-4-line"></i> Inicio</a>
             <a href="presupuesto.html" target="_blank" style="font-weight: 700;"><i class="ri-bank-line"></i> Presupuesto CABA</a>
-            <div style="padding: 10px 16px 4px; font-size: 10px; font-weight: 800; color: #3b82f6; text-transform: uppercase; letter-spacing: 0.5px; border-top: 1px solid rgba(0,0,0,0.05); margin-top: 4px;"><i class="ri-pulse-line"></i> SIMULADOR CÍVICO</div>
-            <a href="simulador.html#1" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color:#475569; font-weight: 600;"><i class="ri-map-pin-user-line" style="font-size:16px; color:#3b82f6;"></i> 1. Presupuesto</a>
-            <a href="simulador.html#2" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color:#475569; font-weight: 600;"><i class="ri-government-line" style="font-size:16px; color:#3b82f6;"></i> 2. Promesómetro</a>
-            <a href="simulador.html#3" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color:#475569; font-weight: 600;"><i class="ri-vote-line" style="font-size:16px; color:#3b82f6;"></i> 3. Consultas</a>
-            <a href="simulador.html#4" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color:#475569; font-weight: 600;"><i class="ri-time-line" style="font-size:16px; color:#3b82f6;"></i> 4. Banco de Tiempo</a>
-            <a href="simulador.html#5" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color:#475569; font-weight: 600;"><i class="ri-file-list-3-line" style="font-size:16px; color:#3b82f6;"></i> 5. Propuestas</a>
-            <a href="simulador.html#6" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color:#475569; font-weight: 600;"><i class="ri-alarm-warning-line" style="font-size:16px; color:#3b82f6;"></i> 6. Alertas</a>
-            <a href="simulador.html#7" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color:#475569; font-weight: 600; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 12px; margin-bottom: 4px;"><i class="ri-bar-chart-box-line" style="font-size:16px; color:#3b82f6;"></i> 7. Transparencia</a>
+            <div style="padding: 10px 16px 4px; font-size: 10px; font-weight: 800; color: rgba(255, 255, 255, 0.45); text-transform: uppercase; letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 4px;"><i class="ri-pulse-line" style="color: rgba(255, 255, 255, 0.45);"></i> SIMULADOR CÍVICO</div>
+            <a href="simulador.html#1" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); font-weight: 600;"><i class="ri-map-pin-user-line" style="font-size:16px; color: rgba(255, 255, 255, 0.5);"></i> 1. Presupuesto</a>
+            <a href="simulador.html#2" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); font-weight: 600;"><i class="ri-government-line" style="font-size:16px; color: rgba(255, 255, 255, 0.5);"></i> 2. Promesómetro</a>
+            <a href="simulador.html#3" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); font-weight: 600;"><i class="ri-vote-line" style="font-size:16px; color: rgba(255, 255, 255, 0.5);"></i> 3. Consultas</a>
+            <a href="simulador.html#4" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); font-weight: 600;"><i class="ri-time-line" style="font-size:16px; color: rgba(255, 255, 255, 0.5);"></i> 4. Banco de Tiempo</a>
+            <a href="simulador.html#5" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); font-weight: 600;"><i class="ri-file-list-3-line" style="font-size:16px; color: rgba(255, 255, 255, 0.5);"></i> 5. Propuestas</a>
+            <a href="simulador.html#6" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); font-weight: 600;"><i class="ri-alarm-warning-line" style="font-size:16px; color: rgba(255, 255, 255, 0.5);"></i> 6. Alertas</a>
+            <a href="simulador.html#7" target="_blank" style="padding-left: 28px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; margin-bottom: 4px;"><i class="ri-bar-chart-box-line" style="font-size:16px; color: rgba(255, 255, 255, 0.5);"></i> 7. Transparencia</a>
             <a href="#" onclick="app.mobileNav('screen-situacion-calle')"><i class="ri-government-line"></i> Reportes Cívicos</a>
             <a href="#" onclick="app.mobileNav('screen-Comedores')"><i class="ri-government-line"></i> Cabildos</a>
             <a href="#" onclick="app.mobileNav('screen-anuncios')"><i class="ri-megaphone-line"></i> Anuncios</a>
